@@ -21,7 +21,7 @@ class Resquest(BaseHTTPRequestHandler):
             html = sql.AddLog(paths[1])
             # html=sql.AddLog('{"name":"测试软件","log":[{"level":1,"info":"测试消息1"},{"level":2,"info":"测试消息2"}]}')
         else:
-            html = '未知命令'
+            html = open("README.html", "r",encoding='utf-8').read()
         self.wfile.write(html.encode('utf-8'))
 
 

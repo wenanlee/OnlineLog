@@ -1,6 +1,5 @@
 import sqlite3
 import json
-import pymysql
 
 conn = sqlite3.connect('log.db')
 print('数据库打开')
