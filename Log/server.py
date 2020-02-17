@@ -16,10 +16,12 @@ class Resquest(BaseHTTPRequestHandler):
         if paths[0] == '/favicon.ico':
             pass
         elif paths[0] == '/select':
-            html = sql.GetLog(paths[1])
+            if len(paths)>1:arg=paths[1]
+            else:arg=''
+            html = sql.GetLog(arg)
         elif paths[0] == '/insert':
             html = sql.AddLog(paths[1])
-            # html=sql.AddLog('{"name":"测试软件","log":[{"level":1,"info":"测试消息1"},{"level":2,"info":"测试消息2"}]}')
+            #html=sql.AddLog('name=测试软件,log=[{"level":1,"info":"测试消息1"},{"level":2,"info":"测试消息2"}]')
         else:
             html = open("README.html", "r",encoding='utf-8').read()
         self.wfile.write(html.encode('utf-8'))
