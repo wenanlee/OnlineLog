@@ -28,7 +28,7 @@
 > docker build -t log .
 > docker run -d -p 8080:80 log
 > ```
-> * sql
+> * SQL
 > ```
 > id
 uid
