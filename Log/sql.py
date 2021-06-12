@@ -7,16 +7,21 @@ f = open("select.html", "r", encoding='utf-8').read()
 
 #登录
 def Login(arg):
+    print("arg:"+arg)
+    args = dict(item.split("=", 1) for item in arg.split("&", 2))
     global conn
     c = conn.cursor()
-    sql = "SELECT * FROM user WHERE username={} and password={}".format(arg['username'],arg['password'])
-    print(sql)
+    sql = "SELECT * FROM user WHERE username='{}' and password='{}'".format(args['username'],args['password'])
+    print("sql:"+sql)
     try:
         c.execute(sql)
         uid = c.fetchone()
+        print("uid",uid,uid!=None,uid[0])
+        print("UPDATE user SET count=count+1 WHERE id = {}".format(uid[0]))
         if uid!=None:
-            c.execute("UPDATE user SET count=count+1 WHERE id = 1")
-            return uid
+            c = conn.cursor()
+            c.execute("UPDATE user SET count=count+1 WHERE id = {}".format(uid[0]))
+            return "uid"+uid[0]
         else:
             return "false username is None"
     except:
@@ -76,3 +81,8 @@ def DelLog(arg):
     except:
         c.rollback()
         return "false"
+
+def Quit():
+    global conn
+    c = conn.cursor()
+    c.close()

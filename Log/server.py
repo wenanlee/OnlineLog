@@ -22,10 +22,11 @@ class Resquest(BaseHTTPRequestHandler):
         elif paths[0] == '/insert':
             html = sql.AddLog(paths[1])
             #html=sql.AddLog('name=测试软件,log=[{"level":1,"info":"测试消息1"},{"level":2,"info":"测试消息2"}]')
+        elif paths[0] == '/login':
+            html = sql.Login(paths[1])
         else:
             html = open("README.html", "r",encoding='utf-8').read()
         self.wfile.write(html.encode('utf-8'))
-
 
 if __name__ == '__main__':
     host = ('', 80)
