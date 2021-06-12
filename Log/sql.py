@@ -9,9 +9,14 @@ def AddLog(log):
     args = dict(item.split("=", 1) for item in log.split("&", 2))
     global conn
     c = conn.cursor()
-    sql = "INSERT INTO log (uid,app_name,log_level,log_info) VALUES "
+    print(args['uid'])
+    print(type(int(args['uid'])))
+    
+    sql = "INSERT INTO log (uid,app_name,log_level,log_info,time,count) VALUES "
     for item in json.loads(args["log"]):
-        sql += "({0},'{1}',{2},'{3}'),".format(args['uid'],args['name'],item['level'], item['info'] )
+        print(item['info'])
+        print(item['level'])
+        sql += "({0},'{1}',{2},'{3}','{4}',{5},(SELECT count FROM user WHERE id={0}})),".format(int(args['uid']),args['name'],item['level'], item['info'],item['time'])
     sql = sql[:-1]+';'
     print(sql)
     try:
@@ -35,7 +40,7 @@ def GetLog(arg):
         html = ''
         for row in c.fetchall():
             html = html+('<tr class="alt"><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>'.format(
-                row[0], row[1], row[2], row[3], row[4], row[5]))
+                row[0], row[2], row[3], row[4], row[5], row[6]))
         return f.replace('command', html)
     except:
         return "false"
