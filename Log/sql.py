@@ -4,7 +4,7 @@ import time
 conn = sqlite3.connect('log.db')
 print('数据库打开')
 f = open("select.html", "r", encoding='utf-8').read()
-
+#添加
 def AddLog(log):
     args = dict(item.split("=", 1) for item in log.split("&", 2))
     print(args)
@@ -40,7 +40,7 @@ def GetLog(arg):
         return f.replace('command', html)
     except:
         return "false"
-
+#删除
 def DelLog(arg):
     global conn
     print(arg)
