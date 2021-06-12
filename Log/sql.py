@@ -3,6 +3,7 @@ import json
 import time
 conn = sqlite3.connect('log.db')
 print('数据库打开')
+f = open("select.html", "r", encoding='utf-8').read()
 
 def AddLog(log):
     args = dict(item.split("=", 1) for item in log.split("&", 2))
@@ -14,9 +15,13 @@ def AddLog(log):
         sql += "('{0}',{1},'{2}'),".format(args['name'],item['level'], item['info'] )
     sql = sql[:-1]+';'
     print(sql)
-    c.execute(sql)
-    conn.commit()
-    return "ok"
+    try:
+        c.execute(sql)
+        conn.commit()
+        return "true"
+    except:
+        c.rollback()
+        return "false"
     
 #查询
 def GetLog(arg):
@@ -26,9 +31,22 @@ def GetLog(arg):
     c = conn.cursor()
     sql = "SELECT * FROM log WHERE "+arg
     c.execute(sql)
-    f = open("select.html", "r", encoding='utf-8').read()
+    global f
     html = ''
     for row in c.fetchall():
         html = html+('<tr class="alt"><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>'.format(
             row[0], row[1], row[2], row[3], row[4], row[5]))
     return f.replace('command', html)
+
+def DelLog(arg):
+    global conn
+    print(arg)
+    c = conn.cursor()
+    sql = "DELETE FROM log WHERE "+arg
+    try:
+        c.execute(sql)
+        conn.commit()
+        return "true"
+    except:
+        c.rollback()
+        return "false"
