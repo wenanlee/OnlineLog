@@ -30,13 +30,16 @@ def GetLog(arg):
     print(arg)
     c = conn.cursor()
     sql = "SELECT * FROM log WHERE "+arg
-    c.execute(sql)
-    global f
-    html = ''
-    for row in c.fetchall():
-        html = html+('<tr class="alt"><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>'.format(
-            row[0], row[1], row[2], row[3], row[4], row[5]))
-    return f.replace('command', html)
+    try:
+        c.execute(sql)
+        global f
+        html = ''
+        for row in c.fetchall():
+            html = html+('<tr class="alt"><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>'.format(
+                row[0], row[1], row[2], row[3], row[4], row[5]))
+        return f.replace('command', html)
+    except:
+        return "false"
 
 def DelLog(arg):
     global conn
