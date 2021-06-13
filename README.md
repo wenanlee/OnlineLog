@@ -26,7 +26,7 @@
 >
 > ```bash
 > docker build -t log .
-> docker run -d -p 8080:80 log
+> docker run -d -v $(pwd)/log:/data -p 8080:80 log
 > ```
 > * SQL
 > ```
