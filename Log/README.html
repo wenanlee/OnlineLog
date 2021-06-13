@@ -27,8 +27,11 @@ python server -p 8080
 <li>Docker</li>
 
 </ul>
-<pre><code class='language-shell' lang='shell'>docker build -t log .
-docker run -d -v $(pwd)/log:/data -p 8080:80 log
+<pre><code class='language-shell' lang='shell'>
+git clone https://github.com/wenanlee/OnlineLog.git
+cd OnlineLog/
+docker build -t log .
+docker run -d -v $(pwd)/Log:/data --name Log -p 8080:80 log
 </code></pre>
 <ul>
 <li>SQL</li>
