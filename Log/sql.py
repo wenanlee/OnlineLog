@@ -56,7 +56,7 @@ def GetLog(arg):
     #args = dict(item.split("=", 1) for item in arg.split("&", 2))
     global conn
     c = conn.cursor()
-    sql = "SELECT * FROM log WHERE "+arg+' and id IN (select min(id) from log group by log_info)'
+    sql = "SELECT * FROM log WHERE "+arg+' and id IN (select min(id) from log group by log_info,app_count,app_name)'
     print(sql)
     try:
         c.execute(sql)
