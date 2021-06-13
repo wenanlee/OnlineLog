@@ -17,14 +17,15 @@ def Login(arg):
         c.execute(sql)
         uid = c.fetchone()
         print("uid",uid,uid!=None,uid[0])
-        print("UPDATE user SET count=count+1 WHERE id = {}".format(uid[0]))
+        print("UPDATE user SET app_count=app_count+1 WHERE id = {}".format(uid[0]))
         if uid!=None:
-            c = conn.cursor()
-            c.execute("UPDATE user SET count=count+1 WHERE id = {}".format(uid[0]))
-            return "uid"+uid[0]
+            c.execute("UPDATE user SET app_count=app_count+1 WHERE id = {}".format(uid[0]))
+            conn.commit()
+            return "uid"+str(uid[0])
         else:
             return "false username is None"
-    except:
+    except(sqlite3.DatabaseError) as e:
+        print(e)
         return "false"
 
 #添加
@@ -35,11 +36,11 @@ def AddLog(log):
     print(args['uid'])
     print(type(int(args['uid'])))
     
-    sql = "INSERT INTO log (uid,app_name,log_level,log_info,time,count) VALUES "
+    sql = "INSERT INTO log (uid,app_name,log_level,log_info,time,app_count) VALUES "
     for item in json.loads(args["log"]):
         print(item['info'])
         print(item['level'])
-        sql += "({0},'{1}',{2},'{3}','{4}',{5},(SELECT count FROM user WHERE id={0}})),".format(int(args['uid']),args['name'],item['level'], item['info'],item['time'])
+        sql += "({0},'{1}',{2},'{3}','{4}',(SELECT app_count FROM user WHERE id={0})),".format(int(args['uid']),args['name'],item['level'], item['info'],item['time'])
     sql = sql[:-1]+';'
     print(sql)
     try:
