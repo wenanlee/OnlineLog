@@ -63,8 +63,8 @@ def GetLog(arg):
         global f
         html = ''
         for row in c.fetchall():
-            html = html+('<tr class="alt"><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>'.format(
-                row[0], row[2], row[3], row[4], row[5], row[6]))
+            html = html+('<tr class="alt"><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>'.format(
+                row[0], row[3], row[4], row[1], row[5], row[6], row[7]))
         return f.replace('command', html)
     except:
         return "false"
