@@ -25,8 +25,10 @@
 > * Docker
 >
 > ```bash
+> git clone https://github.com/wenanlee/OnlineLog.git
+> cd OnlineLog/
 > docker build -t log .
-> docker run -d -v $(pwd)/log:/data -p 8080:80 log
+> docker run -d -v $(pwd)/Log:/data --name Log -p 8080:80 log
 > ```
 > * SQL
 > ```
